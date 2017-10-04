@@ -4,7 +4,7 @@ export const relayerApiFeesResponseSchema = {
     properties: {
         makerFee: {$ref: '/Number'},
         takerFee: {$ref: '/Number'},
-        feesRecipient: {$ref: '/Address'},
+        feeRecipient: {$ref: '/Address'},
         takerToSpecify: {$ref: '/Address'},
     },
     required: ['makerFee', 'takerFee'],
