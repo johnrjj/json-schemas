@@ -34,6 +34,7 @@ const {
     relayerApiOrderResponseSchema,
     relayerApiOrdersResponseSchema,
     relayerApiTokenPairsResponseSchema,
+    relayerApiTokensResponseSchema,
 } = schemas;
 
 describe('Schema', () => {
@@ -655,38 +656,11 @@ describe('Schema', () => {
             const testCases = [
                 [],
                 [
-                    {
-                        tokenA: {
-                            address: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
-                            symbol: 'MKR',
-                            decimals: 18,
-                            minAmount: '0',
-                            maxAmount: '10000000000000000000',
-                            precision: 5,
-                        },
-                        tokenB: {
-                            address: '0xef7fff64389b814a946f3e92105513705ca6b990',
-                            symbol: 'GLM',
-                            decimals: 18,
-                            minAmount: '0',
-                            maxAmount: '50000000000000000000',
-                            precision: 5,
-                        },
-                    },
+                    ['0x323b5d4c32345ced77393b3530b1eed0f346429d', '0xef7fff64389b814a946f3e92105513705ca6b990'],
                 ],
-                [
-                    {
-                        tokenA: {
-                            address: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
-                            symbol: 'MKR',
-                            decimals: 18,
-                        },
-                        tokenB: {
-                            address: '0xef7fff64389b814a946f3e92105513705ca6b990',
-                            symbol: 'GLM',
-                            decimals: 18,
-                        },
-                    },
+                                [
+                    ['0x323b5d4c32345ced77393b3530b1eed0f346429d', '0xef7fff64389b814a946f3e92105513705ca6b990'],
+                    ['0xb18845c260f680d5b9d84649638813e342e4f8c9', '0xef7fff64389b814a946f3e92105513705ca6b990'],
                 ],
             ];
             validateAgainstSchema(testCases, relayerApiTokenPairsResponseSchema);
@@ -695,82 +669,121 @@ describe('Schema', () => {
             const checksummedAddress = '0xA2b31daCf30a9C50ca473337c01d8A201ae33e32';
             const testCases = [
                 [
-                    {
-                        tokenA: {
-                            address: checksummedAddress,
-                            symbol: 'MKR',
-                            decimals: 18,
-                        },
-                        tokenB: {
-                            address: checksummedAddress,
-                            symbol: 'GLM',
-                            decimals: 18,
-                        },
-                    },
+                    [checksummedAddress, '0xef7fff64389b814a946f3e92105513705ca6b990'],
                 ],
                 [
-                    {
-                        tokenA: {
-                            address: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
-                            symbol: 'MKR',
-                            decimals: '18',
-                        },
-                        tokenB: {
-                            address: '0xef7fff64389b814a946f3e92105513705ca6b990',
-                            symbol: 'GLM',
-                            decimals: '18',
-                        },
-                    },
+                    ['0x323b5d4c32345ced77393b3530b1eed0f346429d'],
                 ],
                 [
-                    {
-                        tokenA: {
-                            address: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
-                            symbol: 'MKR',
-                        },
-                        tokenB: {
-                            address: '0xef7fff64389b814a946f3e92105513705ca6b990',
-                            symbol: 'GLM',
-                        },
-                    },
+                    [
+                        '0x323b5d4c32345ced77393b3530b1eed0f346429d',
+                        '0xef7fff64389b814a946f3e92105513705ca6b990',
+                        '0xb18845c260f680d5b9d84649638813e342e4f8c9',
+                    ],
                 ],
                 [
-                    {
-                        tokenA: {
-                            address: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
-                            symbol: 'MKR',
-                            decimals: 18,
-                            minAmount: 0,
-                            maxAmount: 10000000000000000000,
-                        },
-                        tokenB: {
-                            address: '0xef7fff64389b814a946f3e92105513705ca6b990',
-                            symbol: 'GLM',
-                            decimals: 18,
-                            minAmount: 0,
-                            maxAmount: 50000000000000000000,
-                        },
-                    },
-                ],
-                [
-                    {
-                        tokenA: {
-                            address: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
-                            symbol: 'MKR',
-                            decimals: 18,
-                            precision: '5',
-                        },
-                        tokenB: {
-                            address: '0xef7fff64389b814a946f3e92105513705ca6b990',
-                            symbol: 'GLM',
-                            decimals: 18,
-                            precision: '5',
-                        },
-                    },
+                    ['0x323b5d4c32345ced77393b3530b1eed0f346429d', '0x323b5d4c32345ced77393b3530b1eed0f346429d'],
                 ],
             ];
             const shouldFail = true;
             validateAgainstSchema(testCases, relayerApiTokenPairsResponseSchema, shouldFail);
+        });
+    });
+    describe('#relayerApiTokensResponse', () => {
+        it('should validate valid tokens response', () => {
+            const testCases = [
+                {},
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {
+                        symbol: 'MKR',
+                        decimals: 18,
+                        minAmount: '0',
+                        maxAmount: '10000000000000000000',
+                        precision: 5,
+                    },
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {
+                        symbol: 'MKR',
+                        decimals: 18,
+                    },
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {
+                        symbol: 'MKR',
+                        decimals: 18,
+                        minAmount: '0',
+                        maxAmount: '10000000000000000000',
+                        precision: 5,
+                    },
+                    '0xef7fff64389b814a946f3e92105513705ca6b990': {
+                        symbol: 'GLM',
+                        decimals: 18,
+                        minAmount: '0',
+                        maxAmount: '50000000000000000000',
+                        precision: 5,
+                    },
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {
+                        symbol: 'MKR',
+                        decimals: 18,
+                    },
+                    '0xef7fff64389b814a946f3e92105513705ca6b990': {
+                        symbol: 'GLM',
+                        decimals: 18,
+                    },
+                },
+            ];
+            const shouldFail = false;
+            validateAgainstSchema(testCases, relayerApiTokensResponseSchema, shouldFail);
+        });
+        it('should fail for invalid tokens response', () => {
+            const checksummedAddress = '0xA2b31daCf30a9C50ca473337c01d8A201ae33e32';
+            const testCases = [
+                {
+                    [checksummedAddress]: {
+                        symbol: 'MKR',
+                        decimals: 18,
+                    },
+                },
+                {
+                    invalidProperty: {
+                        symbol: 'MKR',
+                        decimals: 18,
+                    },
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {symbol: 'MKR'},
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {decimals: 18},
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {
+                        symbol: 'MKR',
+                        decimals: '18',
+                    },
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {
+                        symbol: 'MKR',
+                        decimals: 18,
+                        precision: '5',
+                    },
+                },
+                {
+                    '0x323b5d4c32345ced77393b3530b1eed0f346429d': {
+                        symbol: 'MKR',
+                        decimals: 18,
+                        precision: 5,
+                        minAmount: 0,
+                        maxAmount: 10000000000000000000,
+                    },
+                },
+            ];
+            const shouldFail = true;
+            validateAgainstSchema(testCases, relayerApiTokensResponseSchema, shouldFail);
         });
     });
     describe('#jsNumberSchema', () => {

@@ -50,8 +50,12 @@ import {
 } from '../schemas/relayer_api_order_response_schema';
 import {
     relayerApiTokenPairsResponseSchema,
-    relayerApiTokenTradeInfoSchema,
+    relayerApiTokenPairSchema,
 } from '../schemas/relayer_api_token_pairs_response_schema';
+import {
+    relayerApiTokensResponseSchema,
+    relayerApiTokenTradeInfoSchema,
+} from '../schemas/relayer_api_tokens_response_schema';
 import {
     jsNumber,
     txDataSchema,
@@ -81,5 +85,7 @@ export const schemas = {
     relayerApiOrderResponseSchema,
     relayerApiOrdersResponseSchema,
     relayerApiTokenPairsResponseSchema,
+    relayerApiTokenPairSchema,
+    relayerApiTokensResponseSchema,
     relayerApiTokenTradeInfoSchema,
 };
